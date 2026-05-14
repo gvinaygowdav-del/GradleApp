@@ -2,22 +2,14 @@ pipeline {
     agent any
 
     tools {
-        jdk 'JDK23'
-        gradle 'Gradle'
+        jdk 'JDK11'
+        gradle 'GRADLE'
     }
 
     stages {
-
         stage('Checkout') {
             steps {
-                git branch: 'main',
-                url: 'https://github.com/gvinaygowdav-del/GradleApp.git'
-            }
-        }
-
-        stage('Clean') {
-            steps {
-                bat 'gradle clean'
+                git 'https://github.com/gvinaygowdav-del/GradleApp.git'
             }
         }
 
@@ -25,23 +17,6 @@ pipeline {
             steps {
                 bat 'gradle build'
             }
-        }
-
-        stage('Test') {
-            steps {
-                bat 'gradle test'
-            }
-        }
-
-    }
-
-    post {
-        success {
-            echo 'Build Successful!'
-        }
-
-        failure {
-            echo 'Build Failed!'
         }
     }
 }
