@@ -3,20 +3,59 @@ pipeline {
 
     tools {
         jdk 'JDK11'
-        gradle 'GRADLE'
     }
 
     stages {
+
         stage('Checkout') {
             steps {
                 git 'https://github.com/gvinaygowdav-del/GradleApp.git'
             }
         }
 
-        stage('Build') {
+        stage('Verify Gradle') {
             steps {
-                bat 'gradle build'
+                bat 'gradlew --version'
             }
+        }
+
+        stage('Clean Project') {
+            steps {
+                bat 'gradlew clean'
+            }
+        }
+
+        stage('Build Project') {
+            steps {
+                bat 'gradlew build'
+            }
+        }
+
+        stage('Run Tests') {
+            steps {
+                bat 'gradlew test'
+            }
+        }
+
+        stage('Archive Artifacts') {
+            steps {
+                archiveArtifacts artifacts: 'build/libs/*.jar', fingerprint: true
+            }
+        }
+    }
+
+    post {
+
+        success {
+            echo 'Gradle project build successful!'
+        }
+
+        failure {
+            echo 'Build failed!'
+        }
+
+        always {
+            echo 'Pipeline execution completed.'
         }
     }
 }
