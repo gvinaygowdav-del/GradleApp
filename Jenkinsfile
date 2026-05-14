@@ -9,31 +9,32 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                git 'https://github.com/gvinaygowdav-del/GradleApp.git'
+                git branch: 'main',
+                url: 'https://github.com/gvinaygowdav-del/GradleApp.git'
             }
         }
 
         stage('Verify Gradle') {
             steps {
-                bat 'gradlew --version'
+                sh './gradlew --version'
             }
         }
 
         stage('Clean Project') {
             steps {
-                bat 'gradlew clean'
+                sh './gradlew clean'
             }
         }
 
         stage('Build Project') {
             steps {
-                bat 'gradlew build'
+                sh './gradlew build'
             }
         }
 
         stage('Run Tests') {
             steps {
-                bat 'gradlew test'
+                sh './gradlew test'
             }
         }
 
