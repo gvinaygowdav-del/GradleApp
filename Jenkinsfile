@@ -46,17 +46,16 @@ pipeline {
     }
 
     post {
+        always {
+            echo 'Pipeline execution completed.'
+        }
 
         success {
-            echo 'Gradle project build successful!'
+            echo 'Build successful!'
         }
 
         failure {
             echo 'Build failed!'
-        }
-
-        always {
-            echo 'Pipeline execution completed.'
         }
     }
 }
